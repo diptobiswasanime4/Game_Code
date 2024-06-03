@@ -1,3 +1,3 @@
-# Flask-Todo-List
+# Game Code
 
-# This is a todo list app made using flask.
+# This repo contains Game code
