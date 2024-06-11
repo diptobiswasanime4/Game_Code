@@ -3,6 +3,9 @@ const ctx = canvas.getContext("2d");
 
 const GRAVITY = 0.098;
 
+let dialogElem = document.getElementById("dialog");
+let dialogIndex = 0;
+
 let keys = {
   jump: {
     pressed: false,
@@ -16,10 +19,13 @@ let keys = {
   right: {
     pressed: false,
   },
+  dialog: {
+    pressed: false,
+  },
 };
 
 class Player {
-  constructor({ x, y, color }) {
+  constructor({ x, y, color, type }) {
     this.x = x;
     this.y = x;
     this.velX = 1;
@@ -27,6 +33,9 @@ class Player {
     this.width = 20;
     this.height = 50;
     this.color = color;
+    this.character = {
+      type,
+    };
   }
 
   draw(ctx) {
@@ -52,8 +61,8 @@ class Player {
   }
 }
 
-let player_1 = new Player({ x: 50, y: 50, color: "red" });
-let player_2 = new Player({ x: 300, y: 50, color: "blue" });
+let player_1 = new Player({ x: 50, y: 50, color: "red", type: "main" });
+let player_2 = new Player({ x: 300, y: 50, color: "blue", type: "NPC" });
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -78,13 +87,24 @@ addEventListener("keydown", (e) => {
     case "A":
       keys.left.pressed = true;
       player_1.update(ctx);
-      console.log(player_1);
+      if (player_2.x - player_1.x - 20 < 75) {
+        console.log("Dialog is on!");
+      }
+      console.log(player_2.x - player_1.x - 20);
       break;
     case "d":
     case "D":
       keys.right.pressed = true;
       player_1.update(ctx);
-      console.log(player_1);
+      if (player_2.x - player_1.x - 20 < 75) {
+        console.log("Dialog is on!");
+      }
+      console.log(player_2.x - player_1.x - 20);
+      break;
+    case "z":
+    case "Z":
+      keys.dialog.pressed = true;
+      showDialog(dialogIndex);
       break;
   }
 });
@@ -105,24 +125,41 @@ addEventListener("keyup", (e) => {
     case "D":
       keys.right.pressed = false;
       break;
+    case "z":
+    case "Z":
+      keys.dialog.pressed = false;
+      dialogIndex++;
+      break;
   }
 });
 
-let dialog = {
-  red: {
+let dialog = [
+  {
+    characterType: "main",
     index: 1,
     text: "Hi Blue",
   },
-  red: {
+  {
+    characterType: "NPC",
     index: 2,
     text: "Hi Red",
   },
-  red: {
+  {
+    characterType: "main",
     index: 3,
     text: "How're you doing?",
   },
-  red: {
+  {
+    characterType: "NPC",
     index: 4,
     text: "Good good!",
   },
-};
+];
+
+function showDialog(index) {
+  if (dialog.length == index) {
+    dialogIndex = 0;
+    return;
+  }
+  dialogElem.textContent = `${dialog[index].characterType}: ${dialog[index].text}`;
+}
