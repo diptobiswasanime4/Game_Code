@@ -103,8 +103,10 @@ addEventListener("keydown", (e) => {
       break;
     case "z":
     case "Z":
-      keys.dialog.pressed = true;
-      showDialog(dialogIndex);
+      if (player_2.x - player_1.x - 20 < 75) {
+        keys.dialog.pressed = true;
+        showDialog(dialogIndex);
+      }
       break;
   }
 });
@@ -127,8 +129,10 @@ addEventListener("keyup", (e) => {
       break;
     case "z":
     case "Z":
-      keys.dialog.pressed = false;
-      dialogIndex++;
+      if (player_2.x - player_1.x - 20 < 75) {
+        keys.dialog.pressed = false;
+        dialogIndex++;
+      }
       break;
   }
 });
