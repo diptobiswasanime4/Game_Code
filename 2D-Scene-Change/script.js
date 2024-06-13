@@ -22,6 +22,15 @@ let keys = {
   },
 };
 
+class Scene {
+  constructor() {
+    this.index = 1;
+  }
+}
+
+let scene = new Scene();
+canvas.style.backgroundColor = "grey";
+
 class Player {
   constructor({ x, y, color = "blue", type }) {
     this.x = x;
