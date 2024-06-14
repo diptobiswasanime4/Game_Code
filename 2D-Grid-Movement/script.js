@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+let SIDE = 40;
+
 let dialogElem = document.getElementById("dialog");
 let dialogIndex = 0;
 
@@ -51,12 +53,12 @@ sceneElem.textContent = `Scene ${scene.index} - ${scene.name}`;
 
 class Player {
   constructor({ x, y, color = "blue", type, sceneIndex }) {
-    this.x = x;
-    this.y = y;
+    this.x = x * SIDE;
+    this.y = y * SIDE;
     this.velX = 1;
     this.velY = 1;
-    this.width = 30;
-    this.height = 30;
+    this.width = 40;
+    this.height = 40;
     this.color = color;
     this.character = {
       type,
@@ -77,27 +79,27 @@ class Player {
     }
     if (this.character.type == "MC") {
       if (keys.up.pressed) {
-        this.y -= this.velY;
+        this.y -= 1 * SIDE;
       } else if (keys.down.pressed) {
-        this.y += this.velY;
+        this.y += 1 * SIDE;
       }
       if (keys.left.pressed) {
-        this.x -= this.velX;
+        this.x -= 1 * SIDE;
       } else if (keys.right.pressed) {
-        this.x += this.velX;
+        this.x += 1 * SIDE;
       }
     }
   }
 }
 
 let player = new Player({
-  x: 50,
-  y: 50,
+  x: 1,
+  y: 1,
   color: "red",
   type: "MC",
   sceneIndex: 1,
 });
-let npc = new Player({ x: 250, y: 250, type: "NPC", sceneIndex: 1 });
+let npc = new Player({ x: 5, y: 5, type: "NPC", sceneIndex: 1 });
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -129,22 +131,36 @@ addEventListener("keydown", (e) => {
     case "w":
     case "W":
       keys.up.pressed = true;
+      player.update(ctx);
+      keys.up.pressed = false;
       break;
     case "s":
     case "S":
       keys.down.pressed = true;
+      player.update(ctx);
+      keys.down.pressed = false;
       break;
     case "a":
     case "A":
       keys.left.pressed = true;
+      player.update(ctx);
+      keys.left.pressed = false;
       break;
     case "d":
     case "D":
       keys.right.pressed = true;
+      player.update(ctx);
+      keys.right.pressed = false;
       break;
     case "z":
     case "Z":
-      if (npc.x - player.x - 20 < 75 && npc.y - player.y < 75) {
+      if (
+        (Math.abs((npc.x - player.x) / SIDE) == 1 &&
+          Math.abs((npc.y - player.y) / SIDE) == 0) ||
+        (Math.abs((npc.x - player.x) / SIDE) == 0 &&
+          Math.abs((npc.y - player.y) / SIDE) == 1)
+      ) {
+        console.log("Chat is on");
         keys.talk.pressed = true;
         showDialog(dialogIndex);
       }
