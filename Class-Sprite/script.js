@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-const imageHeight = 320;
+const imageHeight = 1280 / 4;
 const imageWidth = 1280 / 4;
 
 let start = 0;
@@ -9,7 +9,7 @@ let end = 4;
 let speed = 75;
 
 let grassImage = new Image();
-grassImage.src = "./Character-Sprite-02.png";
+grassImage.src = "./Girl-Sprite-0003.png";
 
 function animate() {
   console.log(1);
@@ -54,7 +54,7 @@ function animateSprite(
   ctx.drawImage(
     spriteImage,
     imageWidth * Math.floor(start / speed),
-    0,
+    960,
     imageWidth,
     imageHeight,
     px,
