@@ -8,6 +8,44 @@ let dialogIndex = 0;
 
 let sceneElem = document.getElementById("scene");
 
+let grassImage = new Image();
+grassImage.src = "./Girl-Sprite-0003.png";
+
+const imageHeight = 1280 / 4;
+const imageWidth = 1280 / 4;
+
+let start = 0;
+let end = 4;
+let speed = 75;
+
+function animateSprite(
+  spriteImage,
+  imageWidth,
+  imageHeight,
+  px,
+  py,
+  start,
+  end,
+  speed,
+  ctx
+) {
+  start++;
+  if (start == end * speed) {
+    start = 0;
+  }
+  ctx.drawImage(
+    spriteImage,
+    imageWidth * Math.floor(start / speed),
+    960,
+    imageWidth,
+    imageHeight,
+    px,
+    py,
+    canvas.width / 2,
+    canvas.height / 2
+  );
+}
+
 let keys = {
   up: {
     pressed: false,
@@ -122,6 +160,23 @@ function animate() {
     scene.name = "Great Temple";
     player.y -= 400;
   }
+  start++;
+  if (start == end * speed) {
+    start = 0;
+  }
+
+  animateSprite(
+    grassImage,
+    imageWidth,
+    imageHeight,
+    100,
+    100,
+    start,
+    end,
+    speed,
+    ctx
+  );
+  requestAnimationFrame(animate);
 }
 
 animate();
