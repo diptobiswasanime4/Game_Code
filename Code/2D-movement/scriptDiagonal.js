@@ -26,6 +26,7 @@ const player = {
   maxFrame: 4,
   frameTimer: 0,
   frameInterval: 10,
+  idleFrameInterval: 30,
   moving: false,
   direction: "idle",
 };
@@ -50,40 +51,75 @@ const keys = {
 // Update player movement and animation
 function updatePlayer() {
   player.moving = false;
+  let moveX = 0;
+  let moveY = 0;
 
-  // Determine direction and move
-  if (keys.w && player.y > 0) {
-    player.y -= player.speed;
-    player.direction = "walkUp";
-    player.moving = true;
-  } else if (keys.s && player.y < canvas.height - scaledHeight) {
-    player.y += player.speed;
-    player.direction = "walkDown";
-    player.moving = true;
-  } else if (keys.a && player.x > 0) {
-    player.x -= player.speed;
-    player.direction = "walkLeft";
-    player.moving = true;
-  } else if (keys.d && player.x < canvas.width - scaledWidth) {
-    player.x += player.speed;
-    player.direction = "walkRight";
-    player.moving = true;
-  } else {
+  // Calculate movement based on key combinations
+  if (keys.w && player.y > 0) moveY -= player.speed; // Up
+  if (keys.s && player.y < canvas.height - scaledHeight) moveY += player.speed; // Down
+  if (keys.a && player.x > 0) moveX -= player.speed; // Left
+  if (keys.d && player.x < canvas.width - scaledWidth) moveX += player.speed; // Right
+
+  // Apply diagonal movement with normalized speed
+  if (moveX !== 0 && moveY !== 0) {
+    // Normalize diagonal speed to maintain consistent movement
+    const diagonalSpeed = player.speed / Math.sqrt(2); // Divide by sqrt(2) ≈ 1.414
+    moveX = moveX > 0 ? diagonalSpeed : -diagonalSpeed;
+    moveY = moveY > 0 ? diagonalSpeed : -diagonalSpeed;
+  }
+
+  // Update position
+  player.x += moveX;
+  player.y += moveY;
+
+  // Determine direction based on movement
+  if (moveX === 0 && moveY === 0) {
     player.direction = "idle";
+    player.moving = false;
+  } else {
+    player.moving = true;
+
+    // Diagonal movements
+    if (moveX > 0 && moveY < 0) {
+      // WD (up-right)
+      player.direction = "walkUp";
+    } else if (moveX < 0 && moveY < 0) {
+      // WA (up-left)
+      player.direction = "walkUp";
+    } else if (moveX > 0 && moveY > 0) {
+      // SD (down-right)
+      player.direction = "walkDown";
+    } else if (moveX < 0 && moveY > 0) {
+      // SA (down-left)
+      player.direction = "walkDown";
+    }
+    // Single direction movements
+    else if (moveY < 0) {
+      // W only
+      player.direction = "walkUp";
+    } else if (moveY > 0) {
+      // S only
+      player.direction = "walkDown";
+    } else if (moveX < 0) {
+      // A only
+      player.direction = "walkLeft";
+    } else if (moveX > 0) {
+      // D only
+      player.direction = "walkRight";
+    }
   }
 
   // Set animation row
   player.frameY = animations[player.direction];
 
-  // Animate frames if moving
-  if (player.moving) {
-    player.frameTimer++;
-    if (player.frameTimer >= player.frameInterval) {
-      player.frameX = (player.frameX + 1) % player.maxFrame;
-      player.frameTimer = 0;
-    }
-  } else {
-    player.frameX = 0; // Reset to first idle frame
+  // Animate frames based on moving or idle state
+  player.frameTimer++;
+  const currentInterval = player.moving
+    ? player.frameInterval
+    : player.idleFrameInterval;
+  if (player.frameTimer >= currentInterval) {
+    player.frameX = (player.frameX + 1) % player.maxFrame;
+    player.frameTimer = 0;
   }
 }
 
