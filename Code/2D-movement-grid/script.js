@@ -185,7 +185,7 @@ function drawPlayer() {
 
 // Draw grid (for visualization)
 function drawGrid() {
-  ctx.strokeStyle = "#ccc";
+  ctx.strokeStyle = "grey";
   ctx.lineWidth = 1;
   for (let x = 0; x <= canvas.width; x += tileSize) {
     ctx.beginPath();

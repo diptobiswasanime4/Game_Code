@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maze Pathfinding</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      canvas {
+        border: 1px solid black;
+        display: block;
+        margin-bottom: 30px;
+      }
+
+      .controls {
+        margin: 10px 0;
+      }
+
+      button {
+        padding: 8px 12px;
+        margin-right: 10px;
+      }
+
+      .legend {
+        margin: 10px 0;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+        margin-bottom: 5px;
+      }
+
+      .color-box {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="mazeCanvas"></canvas>
+    <div class="controls">
+      <button id="generateButton">Generate New Maze</button>
+      <button id="findPathButton">Find Path to Apple</button>
+      <label for="speedSlider"
+        >Animation Speed:
+        <input type="range" id="speedSlider" min="1" max="100" value="50" />
+      </label>
+    </div>
+
+    <!-- <div class="legend">
+      <div class="legend-item">
+        <div class="color-box" style="background-color: blue"></div>
+        <span>Player</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: red"></div>
+        <span>Apple</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: #b3c6ff"></div>
+        <span>Visited</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: #66ff66"></div>
+        <span>Current Path</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: #ff9966"></div>
+        <span>Backtracking</span>
+      </div>
+    </div> -->
+    <script src="script.js"></script>
+  </body>
+</html>
