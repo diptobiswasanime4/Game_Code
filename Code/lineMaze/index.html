@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Maze with Backtracking Algorithm</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f0f0f0;
+        padding: 20px;
+      }
+      canvas {
+        background: white;
+        border: 1px solid #333;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
+      .controls {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 16px;
+        background: green;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: darkgreen;
+      }
+      .movement-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 5px;
+        margin-top: 15px;
+      }
+      .movement-controls button {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .info {
+        margin-top: 15px;
+        padding: 15px;
+        background: white;
+        border-radius: 5px;
+        max-width: 600px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <h1>Maze with Backtracking Algorithm</h1> -->
+    <canvas id="mazeCanvas" width="500" height="500"></canvas>
+    <div class="controls">
+      <button id="generateBtn">Generate New Maze</button>
+      <!-- <button id="solveBtn">Solve with Backtracking</button>
+      <button id="resetBtn">Reset Player</button>
+      <button id="clearPathBtn">Clear Path</button> -->
+    </div>
+    <!-- <div class="movement-controls">
+      <div></div>
+      <button id="upBtn">↑</button>
+      <div></div>
+      <button id="leftBtn">←</button>
+      <div></div>
+      <button id="rightBtn">→</button>
+      <div></div>
+      <button id="downBtn">↓</button>
+      <div></div>
+    </div>
+    <div class="info">
+      <p>
+        <strong>Green square:</strong> Player |
+        <strong>Red square:</strong> Apple |
+        <strong>Light blue:</strong> Visited path |
+        <strong>Blue path:</strong> Backtracking solution
+      </p>
+      <p>
+        Use arrow keys or movement buttons to move the player. Click "Solve with
+        Backtracking" to watch the player automatically find the apple.
+      </p>
+    </div> -->
+
+    <script src="script.js"></script>
+    <!-- <script src="origScript.js"></script> -->
+  </body>
+</html>
