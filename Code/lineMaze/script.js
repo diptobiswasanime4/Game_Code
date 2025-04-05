@@ -6,6 +6,7 @@ const rows = Math.floor(canvas.height / cellSize);
 const cols = Math.floor(canvas.width / cellSize);
 
 let maze = [];
+let generationId = 0;
 
 const colors = {
   background: "#FFFFFF",
@@ -19,6 +20,7 @@ const visitedCells = Array(rows)
 function initMaze() {
   maze = [];
   for (let i = 0; i < rows; i++) {
+    visitedCells[i].fill(false);
     let row = [];
     for (let j = 0; j < cols; j++) {
       row.push({ x: j, y: i, walls: [true, true, true, true] });
@@ -28,6 +30,7 @@ function initMaze() {
 }
 
 async function generateMaze() {
+  const currentGeneration = ++generationId;
   initMaze();
   console.log(maze);
 
@@ -39,7 +42,7 @@ async function generateMaze() {
   visitedCells[startY][startX] = true;
   stack.push({ x: startX, y: startY });
 
-  while (stack.length > 0) {
+  while (stack.length > 0 && generationId === currentGeneration) {
     const current = stack[stack.length - 1];
 
     const neighbors = getUnvisitedNeighbors(current.x, current.y, visitedCells);
